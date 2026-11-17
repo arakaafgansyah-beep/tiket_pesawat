@@ -1,0 +1,33 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class main6 extends JFrame {
+    public main6() {
+        super("Tiket Bus");
+        JRadioButton e1 = new JRadioButton("Ekonomi 100000", true), e2 = new JRadioButton("Bisnis 150000"), e3 = new JRadioButton("Eksekutif 250000"),e4 = new JRadioButton("Premium 250000");
+        ButtonGroup g = new ButtonGroup(); g.add(e1); g.add(e2); g.add(e3);g.add(e4);
+        JCheckBox bagasi = new JCheckBox("Bagasi +25000"), asuransi = new JCheckBox("Asuransi +15000");
+        JTextField jml = new JTextField("1", 4);
+        JButton btn = new JButton("Hitung");
+        JLabel hasil = new JLabel(" ");
+        btn.addActionListener(e -> {
+            int n;
+            try { n = Integer.parseInt(jml.getText().trim()); }
+            catch (NumberFormatException ex) { hasil.setText("Jumlah harus angka"); return; }
+            if (n < 1) { hasil.setText("Jumlah minimal 1"); return; }
+            int harga;
+            if (e1.isSelected()) { harga = 100000; }
+            else if (e2.isSelected()) { harga = 150000; }
+            else if (e4.isSelected()) { harga = 250000; }
+            else { harga = 250000; }
+            if (bagasi.isSelected()) { harga += 25000; }
+            if (asuransi.isSelected()) { harga += 15000; }
+            hasil.setText("Total: Rp " + (harga * n));
+        });
+        setLayout(new GridLayout(0, 1, 3, 3));
+        add(e1); add(e2); add(e3); add(e4); add(bagasi); add(asuransi); add(new JLabel("Jumlah tiket:")); add(jml); add(btn); add(hasil);
+        pack(); setLocationRelativeTo(null); setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) { SwingUtilities.invokeLater(() -> new main6().setVisible(true)); }
+}
+
